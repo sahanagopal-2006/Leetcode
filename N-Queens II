@@ -1,0 +1,60 @@
+class Solution {
+public:
+
+bool isSafe(int row,int col,vector<vector<char>>&board,int n){
+    int x=row;
+    int y=col;
+
+    for(int i=0;i<y;i++){
+        if(board[x][i]=='Q')return false;
+    }
+    x=row;
+    y=col;
+    while(x>=0&&y>=0){
+                if(board[x][y]=='Q')return false;
+        x--;
+        y--;
+    }
+    x=row;
+    y=col;
+    while(x<n&&y>=0){
+        if(board[x][y]=='Q')return false;
+        x++;
+        y--;
+    }
+    return true;
+}
+
+
+    void solve(int col,vector<vector<char>>&board,int &ans,int n){
+        if(col==n){
+            ans++;
+            return;
+        }
+
+        for(int i=0;i<n;i++){
+
+            if(isSafe(i,col,board,n)){
+                board[i][col]='Q';
+                solve(col+1,board,ans,n);
+                board[i][col]='.';
+            }
+            else{
+                continue;
+            }
+
+
+        }
+    }
+
+
+    int totalNQueens(int n) {
+         vector<vector<char>>board(n,vector<char>(n,'.'));
+
+int ans=0;
+        solve(0,board,ans,n);
+        return ans;
+
+        
+    }
+};
